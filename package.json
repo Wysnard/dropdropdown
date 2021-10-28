@@ -1,7 +1,7 @@
 {
   "name": "arborescence",
   "version": "0.0.0",
-  "homepage": "https://wysnard.github.io/dropdropdown",
+  "homepage": "https://Wysnard.github.io/dropdropdown",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
