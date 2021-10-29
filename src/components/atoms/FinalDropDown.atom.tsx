@@ -1,28 +1,39 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 
-interface RenderPropsProps {
+export interface FinalDropDownContextProps {
   isDrop: boolean;
   setIsDrop: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type RenderProps = (props: RenderPropsProps) => React.ReactNode;
+type RenderProps = (props: FinalDropDownContextProps) => React.ReactNode;
 
 export interface FinalDropDownAtomProps {
   title: RenderProps;
   children: RenderProps;
 }
 
-export const FinalDropDownContext = React.createContext<RenderPropsProps>({
+const FinalDropDownContext = React.createContext<FinalDropDownContextProps>({
   isDrop: false,
   setIsDrop: () => {},
 });
+
+export const withFinalDropDown =
+  <P extends object>(
+    Component: React.ComponentType<P>
+  ): React.FC<Omit<P, keyof FinalDropDownContextProps>> =>
+  (props) =>
+    (
+      <FinalDropDownContext.Consumer>
+        {(context) => <Component {...(props as P)} {...context} />}
+      </FinalDropDownContext.Consumer>
+    );
 
 const FinalDropDownAtom: React.FC<FinalDropDownAtomProps> = ({
   children,
   title,
 }) => {
   const [isDrop, setIsDrop] = useState(false);
-  const functionProps: RenderPropsProps = { isDrop, setIsDrop };
+  const functionProps: FinalDropDownContextProps = { isDrop, setIsDrop };
 
   return (
     <div>

@@ -1,14 +1,16 @@
 import React from "react";
-import { FinalDropDownContext } from "./FinalDropDown.atom";
+import {
+  FinalDropDownContextProps,
+  withFinalDropDown,
+} from "./FinalDropDown.atom";
 
-export interface DropDownListAtomProps {}
+export interface DropDownListAtomProps extends FinalDropDownContextProps {}
 
-const DropDownListAtom: React.FC<DropDownListAtomProps> = ({ children }) => {
-  return (
-    <FinalDropDownContext.Consumer>
-      {({ isDrop }) => <>{isDrop && <>{children}</>}</>}
-    </FinalDropDownContext.Consumer>
-  );
+const DropDownListAtom: React.FC<DropDownListAtomProps> = ({
+  children,
+  isDrop,
+}) => {
+  return <>{isDrop && <>{children}</>}</>;
 };
 
-export default DropDownListAtom;
+export default withFinalDropDown(DropDownListAtom);
