@@ -1,22 +1,26 @@
 import React, { useState } from "react";
+import DropDownListAtom from "./DropDownList.atom";
+import FinalDropDownAtom from "./FinalDropDown.atom";
 
 export interface DropDownAtomProps {
-  title: string;
+  title: React.ReactNode;
 }
 
 const DropDownAtom: React.FC<DropDownAtomProps> = ({ children, title }) => {
-  const [isDrop, setIsDrop] = useState(false);
-
   return (
-    <div>
-      <div
-        className="cursor-pointer font-bold"
-        onClick={() => setIsDrop(!isDrop)}
-      >
-        {title}
-      </div>
-      {isDrop && <div>{children}</div>}
-    </div>
+    <FinalDropDownAtom
+      title={({ setIsDrop, isDrop }) => (
+        <div
+          className="cursor-pointer font-bold"
+          onClick={() => setIsDrop(!isDrop)}
+        >
+          {title}
+        </div>
+      )}
+    >
+      {/* same as {({ isDrop }) => <>{isDrop && <div>{children}</div>}</>} */}
+      {() => <DropDownListAtom>{children}</DropDownListAtom>}
+    </FinalDropDownAtom>
   );
 };
 
